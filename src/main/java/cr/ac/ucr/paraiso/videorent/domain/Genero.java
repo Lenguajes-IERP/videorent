@@ -1,28 +1,32 @@
 package cr.ac.ucr.paraiso.videorent.domain;
 
 public class Genero {
-	private int codGenero;
+	private int generoId;
 	private String nombreGenero;
 	public Genero() {
-		// TODO Auto-generated constructor stub
 	}
 
-	public Genero(int codGenero, String nombreGenero) {
-		this.codGenero = codGenero;
+	public Genero(int generoId, String nombreGenero) {
+		this.generoId = generoId;
 		this.nombreGenero = nombreGenero;
 	}
 
-	public int getCodGenero() {
-		return codGenero;
+	public int getGeneroId() {
+		return generoId;
 	}
-	public void setCodGenero(int codGenero) {
-		this.codGenero = codGenero;
+
+	public void setGeneroId(int generoId) {
+		this.generoId = generoId;
 	}
+
 	public String getNombreGenero() {
 		return nombreGenero;
 	}
+
 	public void setNombreGenero(String nombreGenero) {
 		this.nombreGenero = nombreGenero;
 	}
+
+	
 	
 }

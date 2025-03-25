@@ -1,28 +1,25 @@
 package cr.ac.ucr.paraiso.videorent.domain;
 
 public class Actor {
-	private int codActor;
+	private int actorId;
 	private String nombreActor;
 	private String apellidosActor;
 	
 	public Actor() {
-		// TODO Auto-generated constructor stub
 	}
-	
 
-	public Actor(int codActor, String nombreActor, String apellidosActor) {
-		this.codActor = codActor;
+	public Actor(int actorId, String nombreActor, String apellidosActor) {
+		this.actorId = actorId;
 		this.nombreActor = nombreActor;
 		this.apellidosActor = apellidosActor;
 	}
 
-
-	public int getCodActor() {
-		return codActor;
+	public int getActorId() {
+		return actorId;
 	}
 
-	public void setCodActor(int codActor) {
-		this.codActor = codActor;
+	public void setActorId(int actorId) {
+		this.actorId = actorId;
 	}
 
 	public String getNombreActor() {
@@ -41,4 +38,6 @@ public class Actor {
 		this.apellidosActor = apellidosActor;
 	}
 	
+	
+
 }

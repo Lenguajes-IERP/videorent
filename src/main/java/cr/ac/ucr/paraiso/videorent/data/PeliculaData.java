@@ -20,50 +20,25 @@ import cr.ac.ucr.paraiso.videorent.domain.Pelicula;
 
 @Repository
 public class PeliculaData {
+	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
+	
 	@Transactional(readOnly=true)
 	public List<Pelicula> findMoviesByTitleAndGenre(String title, String genre) {
-		String sqlSelect = "SELECT p.cod_pelicula,p.titulo,p.cod_genero,g.nombre_genero, p.total_peliculas,"
-				+ "p.subtitulada,p.estreno,pa.cod_actor, a.nombre_actor, a.apellidos_actor"
-				+ " FROM Pelicula p left join Genero g on p.cod_genero = g.cod_genero"
-				+ "  left join Pelicula_Actor pa on p.cod_pelicula = pa.cod_pelicula"
-				+ "  left join Actor a on pa.cod_actor = a.cod_actor"
-				+ " WHERE p.titulo like '%"+title.trim() + "%' and g.nombre_genero like '%"+genre.trim()+"%'";
-		return jdbcTemplate.query(sqlSelect, new PeliculaExtractor());
+		
+		String sqlSelect = 
+				"SELECT p.pelicula_id, p.titulo, p.subtitulada, p.estreno,"+
+			    "p.genero_id,g.nombre_genero,"+
+			    "a.actor_id, a.nombre_actor,a.apellidos_actor "+
+			    "FROM  Pelicula p " +
+			    "JOIN  Genero g ON p.genero_id = g.genero_id " +
+			    "LEFT JOIN PeliculaActor pa ON p.pelicula_id = pa.pelicula_id "+
+			    "LEFT JOIN Actor a ON pa.actor_id = a.actor_id " +
+			    "WHERE p.titulo LIKE ? OR g.nombre_genero LIKE ?";
+				
+		return jdbcTemplate.query(sqlSelect, new PeliculaExtractor(), "%" + title + "%", "%" +genre + "%");
 	}// findMoviesByTitleAndGenre
 }
 
-class PeliculaExtractor implements ResultSetExtractor<List<Pelicula>> {
-	@Override
-	public List<Pelicula> extractData(ResultSet rs) throws SQLException, DataAccessException {
-		Map<Integer, Pelicula> map = new HashMap<Integer, Pelicula>();
-		Pelicula pelicula = null;
-		while (rs.next()) {
-			Integer id = rs.getInt("cod_pelicula");
-			pelicula = map.get(id);
-			if (pelicula == null) { // new pelicula record
-				pelicula = new Pelicula();
-				pelicula.setCodPelicula(id);
-				pelicula.setTitulo(rs.getString("titulo"));
-				pelicula.getGenero().setCodGenero(rs.getInt("cod_genero"));
-				pelicula.getGenero().setNombreGenero(rs.getString("nombre_genero"));
-				pelicula.setTotalPeliculas(rs.getInt("total_peliculas"));
-				pelicula.setSubtitulada(rs.getBoolean("subtitulada"));
-				pelicula.setEstreno(rs.getBoolean("estreno"));
-				map.put(id, pelicula);
-			} // if
-			int actorId = rs.getInt("cod_actor");
-			if (actorId > 0) {
-				Actor actor = new Actor();
-				actor.setCodActor(actorId);
-				actor.setNombreActor(rs.getString("nombre_actor"));
-				actor.setApellidosActor(rs.getString("apellidos_actor"));
-				pelicula.getActores().add(actor);
-			} // if
-			// TODO Auto-generated method stub
-		} // while
-		return new ArrayList<Pelicula>(map.values());
-	} // extractData
-}

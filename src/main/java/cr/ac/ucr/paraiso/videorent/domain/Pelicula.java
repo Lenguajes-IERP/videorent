@@ -3,12 +3,20 @@ package cr.ac.ucr.paraiso.videorent.domain;
 import java.util.LinkedList;
 import java.util.List;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 public class Pelicula {
 	private int peliculaId;
+	
 	private String titulo;
+	
 	private boolean subtitulada;
 	private boolean estreno;
+	
 	private Genero genero;
+	
 	private List<Actor> actores;
 	
 	public Pelicula() {

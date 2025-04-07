@@ -1,5 +1,6 @@
 package cr.ac.ucr.paraiso.videorent.business;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,5 +19,9 @@ public class PeliculaBusiness {
 		float tipoCambio = 530f;
 		return peliculaData.findMoviesByTitleAndGenre(title, genre);
 	} 
+	
+	public void save(Pelicula pelicula) throws SQLException{
+		peliculaData.save(pelicula);
+	}
 
 }

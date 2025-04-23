@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ import cr.ac.ucr.paraiso.videorent.mapper.PeliculaMapper;
 
 @RestController
 @RequestMapping(value = "/peliculas")
+@CrossOrigin(origins = "http://localhost:4200")
 public class PeliculaRestController {
 	@Autowired
 	private PeliculaBusiness peliculaBusiness;

@@ -21,6 +21,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
+import org.springframework.test.context.jdbc.SqlConfig;
+import org.springframework.transaction.annotation.Transactional;
 
 import cr.ac.ucr.paraiso.videorent.domain.Actor;
 import cr.ac.ucr.paraiso.videorent.domain.Genero;
@@ -111,5 +113,17 @@ public class PeliculaDataTest {
 		assertTrue(!peliculas.isEmpty());
 		assertTrue(peliculas.stream().anyMatch(p -> p.getTitulo().equalsIgnoreCase("avatar")));
 
+	}
+	@Test
+	/*@Sql (scripts = "/remove_pelicula_con_actores.sql", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD,
+			config = @SqlConfig(transactionMode = SqlConfig.TransactionMode.DEFAULT))*/
+	public void remove_pelicula_con_actores() {
+		//Arrange
+		// Retrieve generated genero_id
+       // Integer peliculaId = jdbcTemplate.queryForObject("SELECT IDENT_CURRENT('Pelicula')", Integer.class);
+
+		//Act
+		assertDoesNotThrow(() -> peliculaData.remove(2131));
+		// Assert
 	}
 }
